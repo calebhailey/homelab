@@ -5,12 +5,12 @@ All notable changes to this project will be documented in this file.
 This changelog is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.0.1] - 2019-12-25
+## [0.0.1] - 2019-12-25 - "The Innocent Naivety"
 
 ### Added
 
 - Started a README(.md)
-- Started this CHANGELOG(.md) to journal about my journey
+- Started this CHANGELOG(.md) to document my journey
 - Added a `.gitignore` file to ignore my local `downloads/` directory
 - Built a SmartOS Bootable USB Key following [this guide][0.0.1-1]
 
@@ -53,7 +53,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
   Disk /dev/disk2 ejected
   ```
 
-  Success!
+  Success?!
 
 - Next: Stick the USB key in a port and boot from it!
 
