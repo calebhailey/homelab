@@ -1,0 +1,10 @@
+#!/usr/bin/sh
+# Google Domains Dynamic DNS Updater Script
+# See: https://support.google.com/domains/answer/6147083?hl=en
+
+DDNS_USERNAME=username
+DDNS_PASSWORD=password
+DDNS_HOSTNAME=yourdomain.com
+DDNS_IPADDRESS=$(curl -s http://checkip.amazonaws.com)
+DDNS_STATUS=$(curl -s -XPOST "https://${DDNS_USERNAME}:${DDNS_PASSWORD}@domains.google.com/nic/update?hostname=${DDNS_HOSTNAME}&myip=${DDNS_IPADDRESS}")
+echo "$(date) ${DDNS_STATUS}"

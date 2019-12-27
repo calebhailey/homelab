@@ -5,6 +5,72 @@ All notable changes to this project will be documented in this file.
 This changelog is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## NEXT UP
+
+- [Use my YubiKey for SSH?!][next-0]
+- Install a container runtime & tooling. Bonus points if I can avoid using
+  Docker (runc + podman + containerd?)...
+- Install Kubernetes!
+
+[next-0]: https://github.com/drduh/YubiKey-Guide
+
+## [0.0.3] - 2019-12-26 - "The Detour"
+
+### Added
+
+- Installed Debian Buster! Not to be dismayed by my not-so-smart-os woes, I
+  decided to take the ~~less interesting~~ _basic_ route and just install linux.
+  I grew up on Ubuntu Linux, but I've grown to prefer an even less opinionated
+  Linux, so I grabbed the latest Debian image, flashed my USB drive, and got up
+  and running in minutes.
+
+- I chose not to install a desktop environment to keep things lean, and I also
+  opted not to install any of the package bundles (e.g. what does "basic system
+  utilities") even mean?
+
+- Installed `ssh`, `sudo`, `vim`, `curl`, `tmux`, `git`, `htop`, and the drivers
+  for my WiFi card (`firmware-iwlwifi`). Keeping things lightweight!
+
+- Added my user to the sudoers `usermod -aG sudo calebhailey`
+
+- Added [`/scripts/ddns`][0.0.3-1] for easy remote access via a Google Domains
+  hosted domain name ([documentation][0.0.3-2]).
+
+- Synced my [dotfiles][0.0.3-3].
+
+### Changed
+
+- Modified `/etc/ssh/sshd_config` to disable password authentication and PAM.
+
+- Modified the root user crontab to run the `ddns` script every 5 minutes:
+
+  ```
+  */5 * * * *     /usr/local/bin/ddns >> /var/log/ddns.log 2>&1
+  ```
+
+  Works like a charm! I get a nice clean log output like:
+
+  ```
+  $ $ tail -f /var/log/ddns.log
+  Thu 26 Dec 2019 11:55:01 PM PST nochg 123.123.123.123
+  Fri 27 Dec 2019 12:00:02 AM PST nochg 123.123.123.123
+  ```
+
+  Now I can easily pull up a log to see how often my ISP is changing my IP
+  address. Things only a :nerd_face: would be excited about.
+
+- Modified my user's `$HOME/.ssh/authorized_keys` so I can SSH.
+
+  ```
+  $ curl -s https://github.com/calebhailey.keys > $HOME/.ssh/authorized_keys
+  ```
+
+  Perhaps I should hook this up as a cron job too?
+
+[0.0.3-1]: /blob/master/scripts/ddns
+[0.0.3-2]: https://support.google.com/domains/answer/6147083?hl=en
+[0.0.3-3]: https://github.com/calebhailey/dotfiles
+
 ## [0.0.2] - 2019-12-25 - "Reality Bites"
 
 Well, that was short lived. The SmartOS installer hangs immediately after
