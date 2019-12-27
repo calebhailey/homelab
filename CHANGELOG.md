@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 This changelog is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.0.2] - 2019-12-25 - "Reality Bites"
+
+Well, that was short lived. The SmartOS installer hangs immediately after
+loading the kernel modules. Some intense Googling led me to some GitHub issues
+about similar issues on NUC7 series systems, which were eventually fixed; I
+attempted some of the troubleshooting steps from those GitHub issues without
+success. Elsewhere (Reddit maybe?) I found comments suggesting that NUC7 owners
+were having success (thanks to the above mentioned fixes) where NUC8 owners were
+not. So perhaps my NUC (model number NUC8i7BEH) isn't supported by SmartOS
+(yet)... so abort mission?
+
+### Added
+
+- Installed SmartOS following the [Quick Start Guide][0.0.2-2]
+
+- [Live tweeted][0.0.2-3], like a nerd :nerd_face:
+
+- Added Raspberry Pi 4 to the mix! Some of my Googling suggested that the
+  installer hanging was an ACPI issue, so the USB ports would go dead. So maybe
+  a PXE boot would work? Is that a good enough excuse to order a Raspberry Pi 4?
+  Sure. Why not. The Raspberry Pi should arrive in a few days, and shortly
+  thereafter is shall become a PXE server... and whatever else I need to init my
+  home lab? Yay.
+
+### Changed
+
+- [#1](https://github.com/calebhailey/homelab/issues/1) Fixed image
+  authorization failure ([disabled smart boot in the Intel NUC BIOS][0.0.2-1])
+- Tried a few dozen different
+
+[0.0.2-1]: https://www.intel.com/content/www/us/en/support/articles/000038401/intel-nuc/intel-nuc-kits.html
+[0.0.2-2]: https://wiki.smartos.org/smartos-quick-start-guide/
+[0.0.2-3]: https://twitter.com/calebhailey/status/1209961062788780033
+
 ## [0.0.1] - 2019-12-25 - "The Innocent Naivety"
 
 ### Added
