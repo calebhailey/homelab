@@ -60,14 +60,14 @@ The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
   $ sudo apt-get install docker-ce docker-ce-cli containerd.io
   ```
 
-- Installed Kubernetes! 
+- Installed Kubernetes!
 
-  Followed these guides to install Kubernetes using `kubeadm`: 
-  
+  Followed these guides to install Kubernetes using `kubeadm`:
+
   1. [Installing `kubeadm`][0.0.4-2]
   2. [Creating a single control-plane cluster with `kubeadm`][0.0.4-3]
-  
-  In the end it was pretty simple to setup! 
+
+  In the end it was pretty simple to setup!
 
   ```
   $ sudo apt-get update && sudo apt-get install -y apt-transport-https curl
@@ -79,11 +79,11 @@ The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
   $ sudo apt-get install -y kubelet kubeadm kubectl
   $ sudo apt-mark hold kubelet kubeadm kubectl
   $ kubeadm config images pull
-  $ sudo swapoff -a 
+  $ sudo swapoff -a
   $ sudo kubeadm init
   $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  $ sudo chown ${USER}:${USER} $HOME/.kube/config 
-  $ chmod 644 $HOME/.kube/config 
+  $ sudo chown ${USER}:${USER} $HOME/.kube/config
+  $ chmod 644 $HOME/.kube/config
   ```
 
 - Installed a Kubernetes network plugin ([Flannel][0.0.4-4])
@@ -92,16 +92,16 @@ The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
   $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   ```
 
-- I [live tweeted][0.0.4-5] about my progress! 
+- I [live tweeted][0.0.4-5] about my progress!
 
 - [A Raspberry Pi 4][0.0.4-6]! :nerd_face:
 
-### Changed 
+### Changed
 
-- Configured some iptables rules! 
+- Configured some iptables rules!
 
   ```
-  $ sudo iptables -S 
+  $ sudo iptables -S
   -P INPUT ACCEPT
   -P FORWARD ACCEPT
   -P OUTPUT ACCEPT  
@@ -109,8 +109,8 @@ The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
   -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
   -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
   -A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
-  
-  $ sudo iptables -S 
+
+  $ sudo iptables -S
   -P INPUT ACCEPT
   -P FORWARD ACCEPT
   -P OUTPUT ACCEPT  
@@ -119,23 +119,23 @@ The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
   -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
   -A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT  
   ```
-  
+
   _TIL: you can run `dpkg-reconfigure iptables-persistent` to save firewall rules._
-  
+
 - Disabled system swap (as recommended by `kubeadm`)
 
   ```
   $ sudo swapoff -a
   ```
-  
+
   I also edited `/etc/fstab` and commented out the swap partition to prevent it
-  from be mounted after a reboot. 
-  
+  from be mounted after a reboot.
+
 [0.0.4-1]: https://docs.docker.com/install/linux/docker-ce/debian/
 [0.0.4-2]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 [0.0.4-3]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 [0.0.4-4]: https://github.com/coreos/flannel
-[0.0.4-5]: https://twitter.com/calebhailey/status/1211006296100524032?s=21 
+[0.0.4-5]: https://twitter.com/calebhailey/status/1211006296100524032?s=21
 [0.0.4-6]: https://twitter.com/calebhailey/status/1211090177499598851?s=21
 
 
