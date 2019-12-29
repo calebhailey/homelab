@@ -23,10 +23,10 @@ On the cusp of greatness (but never quite there).
 This is the general direction I'm headed. It's aspirational at best, and 100%
 guaranteed to change (or your money back).
 
-- [ ] Provision a handcrafted/bespoke home lab server (SmartOS on Intel NUC)
-- [ ] Provision a handcrafted/bespoke K8s cluster (K3s?)
+- [x] Provision a handcrafted/bespoke home lab server ~~(SmartOS on Intel NUC)~~
+- [x] Provision a handcrafted/bespoke K8s cluster (K3s?)
+- [x] Automate DDNS
 - [ ] Monitor the home lab w/ Sensu Go :boom:
-- [ ] Automate DDNS
 - [ ] Run some software!!!
 - [ ] Automate K8s cluster provisioning
 - [ ] Automate home lab server provisioning

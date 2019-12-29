@@ -8,11 +8,119 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ## NEXT UP
 
 - [Use my YubiKey for SSH?!][next-0]
-- Install a container runtime & tooling. Bonus points if I can avoid using
-  Docker (runc + podman + containerd?)...
-- Install Kubernetes!
+- [Configure the Raspberry Pi 4 as a PXE server?!][next-1]
 
 [next-0]: https://github.com/drduh/YubiKey-Guide
+[next-1]: https://twitter.com/calebhailey/status/1211090177499598851?s=21 
+
+## [0.0.4] - 2019-12-28 - "The Beautiful Snowflake" 
+
+The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
+
+### Added 
+
+- Installed a few missing utilities, including `mosh`, `iptables-persistent`, 
+  `telnet`, and `netcat`.
+
+- Installed the Docker APT repositories and Docker CE packages, following 
+  [this guide][0.0.4-1]
+  
+  ```
+  $ sudo apt-get remove docker docker-engine docker.io containerd runc
+  $ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    software-properties-common
+  $ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add
+  $ sudo apt-key fingerprint 0EBFCD88
+  $ sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) \
+    stable"
+  $ sudo apt-get update
+  $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+  ```
+
+- Installed Kubernetes! 
+
+  Followed these guides to install Kubernetes using `kubeadm`: 
+  
+  1. [Installing `kubeadm`][0.0.4-2]
+  2. [Creating a single control-plane cluster with `kubeadm`][0.0.4-3]
+  
+  In the end it was pretty simple to setup! 
+
+  ```
+  $ sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+  $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  $ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    deb https://apt.kubernetes.io/ kubernetes-xenial main
+    EOF
+  $ sudo apt-get update
+  $ sudo apt-get install -y kubelet kubeadm kubectl
+  $ sudo apt-mark hold kubelet kubeadm kubectl
+  $ kubeadm config images pull
+  $ sudo swapoff -a 
+  $ sudo kubeadm init
+  $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  $ sudo chown ${USER}:${USER} $HOME/.kube/config 
+  $ chmod 644 $HOME/.kube/config 
+  ```
+
+- Installed a Kubernetes network plugin ([Flannel][0.0.4-4])
+
+  ```
+  $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  ```
+
+- I [live tweeted][0.0.4-5] about my progress! 
+
+- [A Raspberry Pi 4][0.0.4-6]! :nerd_face:
+
+### Changed 
+
+- Configured some iptables rules! 
+
+  ```
+  $ sudo iptables -S 
+  -P INPUT ACCEPT
+  -P FORWARD ACCEPT
+  -P OUTPUT ACCEPT  
+  -A INPUT -i lo -j ACCEPT
+  -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+  -A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
+  
+  $ sudo iptables -S 
+  -P INPUT ACCEPT
+  -P FORWARD ACCEPT
+  -P OUTPUT ACCEPT  
+  -A INPUT -i lo -j ACCEPT
+  -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+  -A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT  
+  ```
+  
+  _TIL: you can run `dpkg-reconfigure iptables-persistent` to save firewall rules._
+  
+- Disabled system swap (as recommended by `kubeadm`)
+
+  ```
+  $ sudo swapoff -a
+  ```
+  
+  I also edited `/etc/fstab` and commented out the swap partition to prevent it
+  from be mounted after a reboot. 
+  
+[0.0.4-1]: https://docs.docker.com/install/linux/docker-ce/debian/
+[0.0.4-2]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+[0.0.4-3]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+[0.0.4-4]: https://github.com/coreos/flannel
+[0.0.4-5]: https://twitter.com/calebhailey/status/1211006296100524032?s=21 
+[0.0.4-6]: https://twitter.com/calebhailey/status/1211090177499598851?s=21
+
 
 ## [0.0.3] - 2019-12-26 - "The Detour"
 
