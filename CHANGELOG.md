@@ -17,6 +17,23 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 ### Added
 
+- Added a default Kubernetes `StorageClass` of "manual", for manually creating
+  `PersistentVolume` resources.
+
+  ```yaml
+  ---
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: manual
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"
+  provisioner: kubernetes.io/no-provisioner
+  volumeBindingMode: WaitForFirstConsumer
+  ```
+
+  See ["Change the default StorageClass"][0.0.5-2] for more information.
+
 ### Changed
 
 - [#3](https://github.com/calebhailey/homelab/issues/3) Fixed Kubernetes Node
@@ -28,7 +45,8 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
   node/homelab untainted
   ```
 
-[0.0.5-1]:  https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#control-plane-node-isolation
+[0.0.5-1]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#control-plane-node-isolation
+[0.0.5-2]: https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/
 
 ## [0.0.4] - 2019-12-28 - "The Beautiful Snowflake"
 

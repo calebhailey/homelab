@@ -14,3 +14,35 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/var/lib/kubelet/volumes/"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sensu-backend-etc-sensu-backend-1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/kubelet/volumes/"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sensu-backend-etc-sensu-backend-2
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/kubelet/volumes/"
