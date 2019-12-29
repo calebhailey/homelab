@@ -11,20 +11,37 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - [Configure the Raspberry Pi 4 as a PXE server?!][next-1]
 
 [next-0]: https://github.com/drduh/YubiKey-Guide
-[next-1]: https://twitter.com/calebhailey/status/1211090177499598851?s=21 
+[next-1]: https://twitter.com/calebhailey/status/1211090177499598851?s=21
 
-## [0.0.4] - 2019-12-28 - "The Beautiful Snowflake" 
+## [0.0.5] - 2019-12-29 - "Untitled"
+
+### Added
+
+### Changed
+
+- [#3](https://github.com/calebhailey/homelab/issues/3) Fixed Kubernetes Node
+  Taint configuration; I had skipped this step in the original [installation
+  guide][0.0.5-1]. The fix was really simple:
+
+  ```
+  $ kubectl taint nodes --all node-role.kubernetes.io/master-
+  node/homelab untainted
+  ```
+
+[0.0.5-1]:  https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#control-plane-node-isolation
+
+## [0.0.4] - 2019-12-28 - "The Beautiful Snowflake"
 
 The home lab is alive! I can `tmux` from the iPad via `mosh`! :100:
 
-### Added 
+### Added
 
-- Installed a few missing utilities, including `mosh`, `iptables-persistent`, 
+- Installed a few missing utilities, including `mosh`, `iptables-persistent`,
   `telnet`, and `netcat`.
 
-- Installed the Docker APT repositories and Docker CE packages, following 
+- Installed the Docker APT repositories and Docker CE packages, following
   [this guide][0.0.4-1]
-  
+
   ```
   $ sudo apt-get remove docker docker-engine docker.io containerd runc
   $ sudo apt-get install \
